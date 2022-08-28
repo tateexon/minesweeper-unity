@@ -1,0 +1,54 @@
+{
+    "name": "ClickActions",
+    "maps": [
+        {
+            "name": "ClickAction",
+            "id": "4010bc90-4f8e-42a8-8c95-0f594492702a",
+            "actions": [
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "404be389-ab43-42ca-a0f8-7343919b10c3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftClick",
+                    "type": "Button",
+                    "id": "a7c0e5e7-b5b6-4eaf-bf51-379730b64be7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1dbdc3bd-296a-4e74-b5ea-46955f95de8f",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68c5eefb-263d-4420-9f68-6795b134176f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

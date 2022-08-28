@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardBehavior : MonoBehaviour
+public class Board : MonoBehaviour
 {
     public GameObject prefab;
-    public Board boardData;
+    public BoardData boardData;
     public List<List<GameObject>> board;
 
     public int rows = 10;
@@ -15,7 +15,7 @@ public class BoardBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        boardData = new Board();
+        boardData = new BoardData();
         CreateBoard();
     }
 
