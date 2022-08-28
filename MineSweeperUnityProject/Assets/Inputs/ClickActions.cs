@@ -24,7 +24,7 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
     ""name"": ""ClickActions"",
     ""maps"": [
         {
-            ""name"": ""ClickAction"",
+            ""name"": ""Player"",
             ""id"": ""4010bc90-4f8e-42a8-8c95-0f594492702a"",
             ""actions"": [
                 {
@@ -72,12 +72,18 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Main"",
+            ""bindingGroup"": ""Main"",
+            ""devices"": []
+        }
+    ]
 }");
-        // ClickAction
-        m_ClickAction = asset.FindActionMap("ClickAction", throwIfNotFound: true);
-        m_ClickAction_RightClick = m_ClickAction.FindAction("RightClick", throwIfNotFound: true);
-        m_ClickAction_LeftClick = m_ClickAction.FindAction("LeftClick", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
+        m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -134,34 +140,34 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // ClickAction
-    private readonly InputActionMap m_ClickAction;
-    private IClickActionActions m_ClickActionActionsCallbackInterface;
-    private readonly InputAction m_ClickAction_RightClick;
-    private readonly InputAction m_ClickAction_LeftClick;
-    public struct ClickActionActions
+    // Player
+    private readonly InputActionMap m_Player;
+    private IPlayerActions m_PlayerActionsCallbackInterface;
+    private readonly InputAction m_Player_RightClick;
+    private readonly InputAction m_Player_LeftClick;
+    public struct PlayerActions
     {
         private @ClickActions m_Wrapper;
-        public ClickActionActions(@ClickActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @RightClick => m_Wrapper.m_ClickAction_RightClick;
-        public InputAction @LeftClick => m_Wrapper.m_ClickAction_LeftClick;
-        public InputActionMap Get() { return m_Wrapper.m_ClickAction; }
+        public PlayerActions(@ClickActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
+        public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(ClickActionActions set) { return set.Get(); }
-        public void SetCallbacks(IClickActionActions instance)
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerActions instance)
         {
-            if (m_Wrapper.m_ClickActionActionsCallbackInterface != null)
+            if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @RightClick.started -= m_Wrapper.m_ClickActionActionsCallbackInterface.OnRightClick;
-                @RightClick.performed -= m_Wrapper.m_ClickActionActionsCallbackInterface.OnRightClick;
-                @RightClick.canceled -= m_Wrapper.m_ClickActionActionsCallbackInterface.OnRightClick;
-                @LeftClick.started -= m_Wrapper.m_ClickActionActionsCallbackInterface.OnLeftClick;
-                @LeftClick.performed -= m_Wrapper.m_ClickActionActionsCallbackInterface.OnLeftClick;
-                @LeftClick.canceled -= m_Wrapper.m_ClickActionActionsCallbackInterface.OnLeftClick;
+                @RightClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                @RightClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                @RightClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                @LeftClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @LeftClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @LeftClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
             }
-            m_Wrapper.m_ClickActionActionsCallbackInterface = instance;
+            m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @RightClick.started += instance.OnRightClick;
@@ -173,8 +179,17 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
             }
         }
     }
-    public ClickActionActions @ClickAction => new ClickActionActions(this);
-    public interface IClickActionActions
+    public PlayerActions @Player => new PlayerActions(this);
+    private int m_MainSchemeIndex = -1;
+    public InputControlScheme MainScheme
+    {
+        get
+        {
+            if (m_MainSchemeIndex == -1) m_MainSchemeIndex = asset.FindControlSchemeIndex("Main");
+            return asset.controlSchemes[m_MainSchemeIndex];
+        }
+    }
+    public interface IPlayerActions
     {
         void OnRightClick(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);

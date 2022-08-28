@@ -2,7 +2,7 @@
     "name": "ClickActions",
     "maps": [
         {
-            "name": "ClickAction",
+            "name": "Player",
             "id": "4010bc90-4f8e-42a8-8c95-0f594492702a",
             "actions": [
                 {
@@ -50,5 +50,11 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Main",
+            "bindingGroup": "Main",
+            "devices": []
+        }
+    ]
 }

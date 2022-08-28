@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 public class BoardInput : MonoBehaviour
 {
 
-    private Camera _camera;
-
     private ClickActions ca;
 
     private void Awake()
@@ -17,39 +15,49 @@ public class BoardInput : MonoBehaviour
 
     private void OnEnable()
     {
-        ca.ClickAction.LeftClick.performed += LeftClick;
-        ca.ClickAction.RightClick.performed += RightClick;
-        ca.ClickAction.Enable();
+        ca.Player.LeftClick.performed += LeftClick;
+        ca.Player.RightClick.performed += RightClick;
+        ca.Player.Enable();
     }
+
+    private void OnDisable()
+    {
+        ca.Player.LeftClick.performed -= LeftClick;
+        ca.Player.RightClick.performed -= RightClick;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        _camera = Camera.main;
+    }
+
+    public void Clicked(bool left)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        {
+            if (hit.transform.TryGetComponent<ItemTarget>(out ItemTarget it))
+            {
+                if (left)
+                {
+                    it.LeftClicked();
+                }
+                else
+                {
+                    it.RightClicked();
+                }
+            }
+        }
     }
 
     private void LeftClick(InputAction.CallbackContext obj)
     {
-        Ray ray = new Ray(_camera.transform.position, Mouse.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-        {
-            if (hit.transform.TryGetComponent<ItemTarget>(out ItemTarget it))
-            {
-                it.LeftClicked();
-            }
-        }
+        Clicked(true);
     }
 
     private void RightClick(InputAction.CallbackContext obj)
     {
-        Ray ray = new Ray(_camera.transform.position, Mouse.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-        {
-            if (hit.transform.TryGetComponent<ItemTarget>(out ItemTarget it))
-            {
-                it.RightClicked();
-            }
-        }
+        Clicked(false);
     }
 }
