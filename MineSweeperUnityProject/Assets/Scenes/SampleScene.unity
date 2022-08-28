@@ -666,7 +666,7 @@ MonoBehaviour:
   prefab: {fileID: 2457892464011380493, guid: a2db09b948249ae4da8fac6121e78f66, type: 3}
   rows: 20
   columns: 20
-  bombs: 40
+  bombs: 1
 --- !u!4 &1591392805
 Transform:
   m_ObjectHideFlags: 0

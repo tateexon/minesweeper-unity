@@ -30,7 +30,7 @@ public class BoardInput : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
-            if (hit.transform.TryGetComponent<ItemTarget>(out ItemTarget it))
+            if (hit.transform.TryGetComponent<Space>(out Space it))
             {
                 if (left)
                 {

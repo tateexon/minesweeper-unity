@@ -104,8 +104,8 @@ public class Board : MonoBehaviour
             {
                 var go = Instantiate(prefab, new Vector3((x * 2.0f) - topCorner.x, 0, (y * 2.0f) - topCorner.y), Quaternion.identity, transform);
                 var space = go.GetComponent<Space>();
-                space.data.location = new Vector2Int(x, y);
-                space.data.type = boardData.spaces[x][y];
+                space.board = this;
+                space.data = boardData.spaces[x][y];
                 board[x].Add(go);
             }
         }
@@ -170,6 +170,14 @@ public class Board : MonoBehaviour
         if (boardData.UGet(s.data.location.x + 1, s.data.location.y + 1) >= BoardData.EMPTY)
         {
             s.siblings.Add(board[s.data.location.x + 1][s.data.location.y + 1].GetComponent<Space>());
+        }
+    }
+
+    public void CheckFlags(Space s) {
+        boardData.FlagLocation(s.data.location);
+        var win = boardData.IsBoardFinished();
+        if (win) {
+            Debug.Log("You win");
         }
     }
 }

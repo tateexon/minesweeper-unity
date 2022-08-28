@@ -10,20 +10,27 @@ public class BoardData
     public int rows;
     public int columns;
     public int bombCount;
-    public List<List<int>> spaces;
+    public List<List<SpaceData>> spaces;
     public List<Vector2Int> bombLocations;
+    public List<Vector2Int> flaggedLocationsGood;
+    public List<Vector2Int> flaggedLocationsBad;
 
     public void InitializeBoard()
     {
-        spaces = new List<List<int>>(rows);
+        spaces = new List<List<SpaceData>>(rows);
         for (var x = 0; x < rows; x++)
         {
-            spaces.Add(new List<int>(columns));
+            spaces.Add(new List<SpaceData>(columns));
             for (var y = 0; y < columns; y++)
             {
-                spaces[x].Add(EMPTY);
+                var d = new SpaceData();
+                d.location = new Vector2Int(x, y);
+                d.type = EMPTY;
+                spaces[x].Add(d);
             }
         }
+        flaggedLocationsBad = new List<Vector2Int>();
+        flaggedLocationsGood = new List<Vector2Int>();
     }
 
     public Vector2Int GenerateBombLocation()
@@ -50,7 +57,7 @@ public class BoardData
     {
         try
         {
-            return spaces[x][y];
+            return spaces[x][y].type;
         }
         catch (ArgumentOutOfRangeException) { }
         return -1;
@@ -62,44 +69,44 @@ public class BoardData
         // top left
         if (UGet(bomb.x - 1, bomb.y - 1) >= EMPTY)
         {
-            spaces[bomb.x - 1][bomb.y - 1]++;
+            spaces[bomb.x - 1][bomb.y - 1].type++;
         }
         // middle left
         if (UGet(bomb.x - 1, bomb.y) >= EMPTY)
         {
-            spaces[bomb.x - 1][bomb.y]++;
+            spaces[bomb.x - 1][bomb.y].type++;
         }
         // bottom left
         if (UGet(bomb.x - 1, bomb.y + 1) >= EMPTY)
         {
-            spaces[bomb.x - 1][bomb.y + 1]++;
+            spaces[bomb.x - 1][bomb.y + 1].type++;
         }
 
         // top middle
         if (UGet(bomb.x, bomb.y - 1) >= EMPTY)
         {
-            spaces[bomb.x][bomb.y - 1]++;
+            spaces[bomb.x][bomb.y - 1].type++;
         }
         // bottom middle
         if (UGet(bomb.x, bomb.y + 1) >= EMPTY)
         {
-            spaces[bomb.x][bomb.y + 1]++;
+            spaces[bomb.x][bomb.y + 1].type++;
         }
 
         // top right
         if (UGet(bomb.x + 1, bomb.y - 1) >= EMPTY)
         {
-            spaces[bomb.x + 1][bomb.y - 1]++;
+            spaces[bomb.x + 1][bomb.y - 1].type++;
         }
         // middle right
         if (UGet(bomb.x + 1, bomb.y) >= EMPTY)
         {
-            spaces[bomb.x + 1][bomb.y]++;
+            spaces[bomb.x + 1][bomb.y].type++;
         }
         // bottom right
         if (UGet(bomb.x + 1, bomb.y + 1) >= EMPTY)
         {
-            spaces[bomb.x + 1][bomb.y + 1]++;
+            spaces[bomb.x + 1][bomb.y + 1].type++;
         }
     }
 
@@ -107,7 +114,7 @@ public class BoardData
     {
         foreach (var bomb in bombLocations)
         {
-            spaces[bomb.x][bomb.y] = BOMB;
+            spaces[bomb.x][bomb.y].type = BOMB;
             SetNumbersAroundBomb(bomb);
         }
     }
@@ -117,5 +124,28 @@ public class BoardData
         InitializeBoard();
         GenerateBombLocations();
         SetBombsAndNumbers();
+    }
+
+    public void FlagLocation(Vector2Int location) {
+        var s = spaces[location.x][location.y];
+        if (s.isFlagged && s.IsBomb()) {
+            flaggedLocationsGood.Add(location);
+        } else if(s.isFlagged) {
+            flaggedLocationsBad.Add(location);
+        } else if(!s.isFlagged && s.IsBomb()) {
+            flaggedLocationsGood.Remove(location);
+        } else if (!s.isFlagged) {
+            flaggedLocationsBad.Remove(location);
+        }
+    }
+
+    public bool IsBoardFinished() {
+        if (flaggedLocationsBad.Count > 0) {
+            return false;
+        }
+        if (flaggedLocationsGood.Count == bombCount){
+            return true;
+        }
+        return false;
     }
 }

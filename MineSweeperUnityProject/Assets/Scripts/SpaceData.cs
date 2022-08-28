@@ -22,13 +22,14 @@ public class SpaceData
         return IsBomb();
     }
 
-    public void Flag()
+    public bool Flag()
     {
         if (isClicked)
         {
-            return;
+            return false;
         }
         isFlagged = !isFlagged;
+        return isFlagged;
     }
 
     public bool IsBomb()

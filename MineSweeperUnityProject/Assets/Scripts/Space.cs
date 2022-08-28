@@ -12,6 +12,8 @@ public class Space : ItemTarget
 
     public List<Space> siblings;
 
+    public Board board;
+
     void Awake()
     {
         data = new SpaceData();
@@ -37,13 +39,16 @@ public class Space : ItemTarget
             }
         }
         UpdateDisplay();
+        board.CheckFlags(this);
     }
 
     public override void RightClicked()
     {
-        data.Flag();
+        var didFlag = data.Flag();
         Debug.Log("flagging space: " + data.location);
         UpdateDisplay();
+
+        board.CheckFlags(this);
     }
 
     public void UpdateDisplay()
