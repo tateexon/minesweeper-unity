@@ -4,8 +4,7 @@
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
-[Ll]ogs/shadercompiler*
-[Ll]ogs/AssetImportWorker*
+MineSweeperUnityProject/Logs/
 
 # Visual Studio cache directory
 .vs/
