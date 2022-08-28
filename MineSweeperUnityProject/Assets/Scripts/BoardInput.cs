@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,11 +22,6 @@ public class BoardInput : MonoBehaviour
     {
         ca.Player.LeftClick.performed -= LeftClick;
         ca.Player.RightClick.performed -= RightClick;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
     }
 
     public void Clicked(bool left)

@@ -44,6 +44,15 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0f6f335-be8b-4e6c-aa3d-346c1d9eab63"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -68,6 +77,17 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
                     ""action"": ""LeftClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a346af09-f084-40a5-9870-beca0ac46c57"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -84,6 +104,7 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
+        m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -145,12 +166,14 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_RightClick;
     private readonly InputAction m_Player_LeftClick;
+    private readonly InputAction m_Player_Reset;
     public struct PlayerActions
     {
         private @ClickActions m_Wrapper;
         public PlayerActions(@ClickActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
         public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
+        public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -166,6 +189,9 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
                 @LeftClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
                 @LeftClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
                 @LeftClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @Reset.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
+                @Reset.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
+                @Reset.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -176,6 +202,9 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
                 @LeftClick.started += instance.OnLeftClick;
                 @LeftClick.performed += instance.OnLeftClick;
                 @LeftClick.canceled += instance.OnLeftClick;
+                @Reset.started += instance.OnReset;
+                @Reset.performed += instance.OnReset;
+                @Reset.canceled += instance.OnReset;
             }
         }
     }
@@ -193,5 +222,6 @@ public partial class @ClickActions : IInputActionCollection2, IDisposable
     {
         void OnRightClick(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
 }

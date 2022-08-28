@@ -51,6 +51,9 @@ MonoBehaviour:
   p: {x: 0, y: 0}
   isClicked: 0
   isFlagged: 0
+  text: {fileID: 7525412944752158847}
+  model: {fileID: 4848260725178082534}
+  siblings: []
 --- !u!65 &-4300354156388653404
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,6 +372,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02313f834766f044e9f4c10a67f89ee0, type: 3}
+--- !u!1 &4848260725178082534 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 02313f834766f044e9f4c10a67f89ee0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5731132482879396279}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5189180164089052764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 02313f834766f044e9f4c10a67f89ee0,
