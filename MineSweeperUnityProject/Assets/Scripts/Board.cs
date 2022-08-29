@@ -104,7 +104,6 @@ public class Board : MonoBehaviour
             {
                 var go = Instantiate(prefab, new Vector3((x * 2.0f) - topCorner.x, 0, (y * 2.0f) - topCorner.y), Quaternion.identity, transform);
                 var space = go.GetComponent<Space>();
-                space.board = this;
                 space.data = boardData.spaces[x][y];
                 board[x].Add(go);
             }
@@ -173,7 +172,8 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void CheckFlags(Space s) {
+    public void CheckFlags(GameObject g) {
+        var s = g.GetComponent<Space>();
         boardData.FlagLocation(s.data.location);
         var win = boardData.IsBoardFinished();
         if (win) {

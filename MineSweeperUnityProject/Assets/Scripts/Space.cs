@@ -12,7 +12,7 @@ public class Space : ItemTarget
 
     public List<Space> siblings;
 
-    public Board board;
+    [SerializeField] GameObjectEvent _gameEvent;
 
     void Awake()
     {
@@ -39,7 +39,7 @@ public class Space : ItemTarget
             }
         }
         UpdateDisplay();
-        board.CheckFlags(this);
+        _gameEvent.Raise(this.gameObject);
     }
 
     public override void RightClicked()
@@ -48,7 +48,7 @@ public class Space : ItemTarget
         Debug.Log("flagging space: " + data.location);
         UpdateDisplay();
 
-        board.CheckFlags(this);
+        _gameEvent.Raise(this.gameObject);
     }
 
     public void UpdateDisplay()

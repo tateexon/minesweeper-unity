@@ -47,13 +47,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e3f9c3739ebbe4eb0f0a829e27678c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceType: 0
-  p: {x: 0, y: 0}
-  isClicked: 0
-  isFlagged: 0
+  data:
+    type: 0
+    location: {x: 0, y: 0}
+    isFlagged: 0
+    isClicked: 0
   text: {fileID: 7525412944752158847}
   model: {fileID: 4848260725178082534}
   siblings: []
+  board: {fileID: 0}
+  checkFlags: {fileID: 0}
+  _gameEvent: {fileID: 11400000, guid: 7dcbb7b8b2e758f4baaa3e845e4dedd6, type: 2}
 --- !u!65 &-4300354156388653404
 BoxCollider:
   m_ObjectHideFlags: 0
