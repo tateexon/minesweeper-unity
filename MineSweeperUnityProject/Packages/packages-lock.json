@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.craztad.scriptableobjecthelper": {
+      "version": "https://github.com/tateexon/ScriptableObjectHelper.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "414c2d7f60e35b2dcec6b3f8aea7ab62c63d6bb0"
+    },
     "com.unity.burst": {
       "version": "1.7.3",
       "depth": 1,

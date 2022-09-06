@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Craztad.ScriptableObjectHelper;
 
 public class Space : ItemTarget
 {
